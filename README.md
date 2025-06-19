@@ -1,4 +1,4 @@
-![wderlust2](https://github.com/krishna142-tech/Wanderlust)# 🌍 Wanderlust Travel Agency
+# 🌍 Wanderlust Travel Agency
 
 
 
