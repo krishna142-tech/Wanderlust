@@ -1,21 +1,18 @@
-# 🌍 Wanderlust Travel Agency
+![wderlust2](https://github.com/krishna142-tech/Wanderlust)# 🌍 Wanderlust Travel Agency
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-blue?style=for-the-badge&logo=vercel)](https://your-vercel-url.vercel.app)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![React](https://img.shields.io/badge/React-18.3.1-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4.1-blue?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+
 
 > A modern, interactive travel agency website built with React, TypeScript, and advanced animations. Experience breathtaking destinations with smooth animations, interactive cursor effects, and a premium user interface.
 
 ## 🚀 Live Demo
 
-**[Visit Wanderlust Travel →](https://your-vercel-url.vercel.app)**
+**[Visit Wanderlust Travel →](https://wanderlust-teal.vercel.app/)**
 
 ## 📸 Screenshots
 
 ### Desktop View
-![Desktop Hero Section](./screenshots/desktop-hero.png)
+![Desktop Hero Section](![wanderlust1](https://github.com/user-attachments/assets/cf55cb69-14b6-4b15-9ca5-7c9ba17c18f5)
+)
 *Hero section with interactive animations and custom cursor effects*
 
 ### Mobile Responsive
@@ -23,11 +20,13 @@
 *Fully responsive design optimized for all devices*
 
 ### Dark Mode
-![Dark Mode](./screenshots/dark-mode.png)
+![Dark Mode](![wderlust2](https://github.com/user-attachments/assets/71691ade-fa3e-4811-805b-34f6c69d090e)
+)
 *Beautiful dark mode with smooth transitions*
 
 ### Interactive Features
-![Interactive Cursor](./screenshots/cursor-effects.png)
+![wandlust4](https://github.com/user-attachments/assets/7035a87b-361a-45fe-985a-e67b8320b3ae)
+
 *Advanced cursor interactions and visual feedback*
 
 ## ✨ Key Features
