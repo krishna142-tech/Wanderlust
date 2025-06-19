@@ -8,9 +8,6 @@ import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
-import CursorTrail from './components/CursorTrail';
-import ParticleSystem from './components/ParticleSystem';
-import InteractiveBackground from './components/InteractiveBackground';
 import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
@@ -31,13 +28,7 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 relative">
-        {/* Advanced Interactive Elements */}
-        <CursorTrail />
-        <ParticleSystem />
-        <InteractiveBackground />
-        
-        {/* Main Content */}
+      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
         <Navbar />
         <Hero />
         <Destinations />
