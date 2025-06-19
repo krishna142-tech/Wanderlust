@@ -494,7 +494,7 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 3, duration: 0.8, ease: "easeOut" }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group z-30"
+          className="absolute bottom-8 w-full flex justify-center cursor-pointer group z-30"
           onClick={scrollToDestinations}
         >
           <motion.div className="flex flex-col items-center">
