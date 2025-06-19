@@ -489,7 +489,7 @@ const Hero: React.FC = () => {
           </motion.div>
         </motion.div>
 
-        {/* Enhanced Scroll Indicator */}
+        {/* Enhanced Scroll Indicator - Fixed Responsive Alignment */}
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -535,7 +535,7 @@ const Hero: React.FC = () => {
             </motion.div>
             
             <motion.p 
-              className="text-white/70 text-sm mt-4 font-medium text-center group-hover:text-white/90 transition-colors duration-300"
+              className="text-white/70 text-sm mt-4 font-medium text-center group-hover:text-white/90 transition-colors duration-300 whitespace-nowrap px-4"
               animate={{ 
                 opacity: [0.7, 1, 0.7],
                 y: [0, -2, 0],
