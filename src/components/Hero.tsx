@@ -116,8 +116,8 @@ const Hero: React.FC = () => {
           ))}
         </div>
 
-        {/* Hero Content with Advanced Animations */}
-        <div className="hero-content relative z-10 text-center text-white max-w-6xl mx-auto px-4">
+        {/* Hero Content with Advanced Animations - FIXED Z-INDEX */}
+        <div className="hero-content relative z-20 text-center text-white max-w-6xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
@@ -132,39 +132,46 @@ const Hero: React.FC = () => {
             <Sparkles className="h-12 w-12 text-sky-400 mx-auto mb-4" />
           </motion.div>
 
-          {/* Advanced Text Reveal */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="mb-8"
-          >
-            <TextReveal 
-              text="Explore The World"
-              className="text-4xl md:text-7xl lg:text-8xl font-bold leading-tight"
-              delay={0.1}
-            />
-          </motion.div>
-
-          <motion.div
+          {/* Main Title - FIXED */}
+          <motion.h1
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.5 }}
-            className="mb-12"
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="text-4xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
           >
-            <TextReveal
-              text="Discover breathtaking destinations, create unforgettable memories, and embark on adventures that will last a lifetime."
-              className="text-lg md:text-2xl text-gray-200 max-w-4xl mx-auto leading-relaxed"
-              delay={0.05}
-            />
-          </motion.div>
+            Explore The
+            <motion.span 
+              className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-orange-400"
+              animate={{ 
+                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+              }}
+              transition={{ 
+                duration: 3, 
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              style={{ backgroundSize: '200% 200%' }}
+            >
+              {' '}World
+            </motion.span>
+          </motion.h1>
 
-          {/* Advanced Interactive Buttons */}
+          {/* Description - FIXED */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+            className="text-lg md:text-2xl mb-8 text-gray-200 max-w-4xl mx-auto leading-relaxed"
+          >
+            Discover breathtaking destinations, create unforgettable memories, and embark on adventures that will last a lifetime.
+          </motion.p>
+
+          {/* Advanced Interactive Buttons - FIXED */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+            transition={{ duration: 0.8, delay: 1.6 }}
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12"
           >
             <RippleEffect>
               <MagneticButton
@@ -202,10 +209,17 @@ const Hero: React.FC = () => {
               Experience Video
             </LiquidButton>
           </motion.div>
+        </div>
 
-          {/* Advanced Floating Elements */}
-          <motion.div
-            className="floating-element absolute top-20 left-4 md:left-8 lg:left-16 hidden lg:block"
+        {/* FIXED Floating Elements with Higher Z-Index */}
+        <motion.div
+          className="floating-element absolute top-20 left-4 md:left-8 lg:left-16 hidden lg:block z-30"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2, duration: 1 }}
+        >
+          <motion.div 
+            className="w-20 h-20 bg-gradient-to-br from-sky-400/30 to-blue-500/30 backdrop-blur-md rounded-3xl flex items-center justify-center border border-white/30 shadow-2xl"
             animate={{
               y: [0, -30, 0],
               rotate: [0, 10, 0],
@@ -216,21 +230,24 @@ const Hero: React.FC = () => {
               repeat: Infinity,
               ease: "easeInOut"
             }}
+            whileHover={{ 
+              scale: 1.2, 
+              rotate: 15,
+              boxShadow: "0 25px 50px rgba(14, 165, 233, 0.4)"
+            }}
           >
-            <motion.div 
-              className="w-20 h-20 bg-gradient-to-br from-sky-400/30 to-blue-500/30 backdrop-blur-md rounded-3xl flex items-center justify-center border border-white/30 shadow-2xl"
-              whileHover={{ 
-                scale: 1.2, 
-                rotate: 15,
-                boxShadow: "0 25px 50px rgba(14, 165, 233, 0.4)"
-              }}
-            >
-              <span className="text-3xl">✈️</span>
-            </motion.div>
+            <span className="text-3xl">✈️</span>
           </motion.div>
+        </motion.div>
 
-          <motion.div
-            className="floating-element absolute bottom-32 right-4 md:right-8 lg:right-16 hidden lg:block"
+        <motion.div
+          className="floating-element absolute bottom-32 right-4 md:right-8 lg:right-16 hidden lg:block z-30"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2.5, duration: 1 }}
+        >
+          <motion.div 
+            className="w-16 h-16 bg-gradient-to-br from-orange-400/30 to-pink-500/30 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30 shadow-2xl"
             animate={{
               y: [0, 30, 0],
               rotate: [0, -10, 0],
@@ -241,26 +258,67 @@ const Hero: React.FC = () => {
               repeat: Infinity,
               ease: "easeInOut"
             }}
+            whileHover={{ 
+              scale: 1.3, 
+              rotate: -15,
+              boxShadow: "0 20px 40px rgba(249, 115, 22, 0.4)"
+            }}
           >
-            <motion.div 
-              className="w-16 h-16 bg-gradient-to-br from-orange-400/30 to-pink-500/30 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30 shadow-2xl"
-              whileHover={{ 
-                scale: 1.3, 
-                rotate: -15,
-                boxShadow: "0 20px 40px rgba(249, 115, 22, 0.4)"
-              }}
-            >
-              <span className="text-2xl">🌴</span>
-            </motion.div>
+            <span className="text-2xl">🌴</span>
           </motion.div>
-        </div>
+        </motion.div>
 
-        {/* Advanced Scroll Indicator */}
+        {/* Additional Floating Elements for Tablets */}
+        <motion.div
+          className="floating-element absolute top-16 left-1/3 hidden md:block lg:hidden z-30"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 3, duration: 1 }}
+        >
+          <motion.div 
+            className="w-12 h-12 bg-gradient-to-br from-cyan-400/30 to-teal-500/30 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/30 shadow-xl"
+            animate={{
+              y: [0, -20, 0],
+              rotate: [0, 10, 0],
+            }}
+            transition={{
+              duration: 4.5,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <span className="text-lg">🗺️</span>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          className="floating-element absolute bottom-16 left-1/4 hidden md:block lg:hidden z-30"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 3.5, duration: 1 }}
+        >
+          <motion.div 
+            className="w-12 h-12 bg-gradient-to-br from-emerald-400/30 to-green-500/30 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/30 shadow-xl"
+            animate={{
+              y: [0, 20, 0],
+              rotate: [0, -10, 0],
+            }}
+            transition={{
+              duration: 5.5,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <span className="text-lg">🎒</span>
+          </motion.div>
+        </motion.div>
+
+        {/* Advanced Scroll Indicator - FIXED */}
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 2.5, type: "spring", stiffness: 200 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group z-30"
           onClick={scrollToDestinations}
         >
           <motion.div className="flex flex-col items-center">
@@ -365,11 +423,14 @@ const Hero: React.FC = () => {
                 className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 z-10"
               >
                 <div className="text-white">
-                  <TextReveal
-                    text="Ultimate Adventure Experience"
+                  <motion.h3
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1 }}
                     className="text-2xl md:text-4xl font-bold mb-3"
-                    delay={0.1}
-                  />
+                  >
+                    Ultimate Adventure Experience
+                  </motion.h3>
                   <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
