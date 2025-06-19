@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle, ExternalLink, Code, Globe } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -53,48 +53,46 @@ const Contact: React.FC = () => {
     });
   };
 
-  const handleQuickContact = (type: 'phone' | 'email' | 'emergency') => {
-    switch (type) {
-      case 'phone':
-        alert('📞 Calling +1 (555) 123-4567...\n\nOur travel experts are available:\nMon-Fri: 9AM-6PM\nSat: 10AM-4PM');
-        break;
-      case 'email':
-        alert('📧 Opening your email client...\n\nSend us an email at: hello@wanderlust.com\n\nWe typically respond within 2-4 hours during business days.');
-        break;
-      case 'emergency':
-        alert('🚨 Emergency Travel Support\n\n24/7 Hotline: +1 (555) 911-HELP\n\nFor urgent travel assistance, lost documents, or emergency situations during your trip.');
-        break;
-    }
+  const handlePortfolioVisit = () => {
+    window.open('https://krishnasevak.netlify.app/', '_blank');
+  };
+
+  const handleDeveloperContact = () => {
+    alert('👨‍💻 Developer Contact\n\n🌐 Portfolio: https://krishnasevak.netlify.app/\n\n📧 For technical inquiries or collaboration opportunities, please visit the portfolio website.\n\n🚀 Specialized in modern web development with React, TypeScript, and advanced animations.');
   };
 
   const contactInfo = [
     {
-      icon: Phone,
-      title: 'Call Us',
-      details: '+1 (555) 123-4567',
-      subtitle: 'Mon-Fri 9AM-6PM',
-      action: () => handleQuickContact('phone')
+      icon: Globe,
+      title: 'Developer Portfolio',
+      details: 'krishnasevak.netlify.app',
+      subtitle: 'View projects & skills',
+      action: handlePortfolioVisit,
+      isExternal: true
+    },
+    {
+      icon: Code,
+      title: 'Technical Support',
+      details: 'Web Development',
+      subtitle: 'React • TypeScript • Animations',
+      action: handleDeveloperContact,
+      isExternal: false
     },
     {
       icon: Mail,
-      title: 'Email Us',
-      details: 'hello@wanderlust.com',
-      subtitle: 'We reply within 24hrs',
-      action: () => handleQuickContact('email')
-    },
-    {
-      icon: MapPin,
-      title: 'Visit Us',
-      details: '123 Travel Street, NYC',
-      subtitle: 'Book in-person consultation',
-      action: () => alert('🏢 Visit our office:\n\n📍 123 Travel Street, New York, NY 10001\n\n🕒 Office Hours:\nMon-Fri: 9AM-6PM\nSat: 10AM-4PM\nSun: Closed\n\n🚗 Free parking available')
+      title: 'Get In Touch',
+      details: 'Contact Form',
+      subtitle: 'Send us your travel plans',
+      action: () => alert('📧 Please use the contact form below to send us your travel inquiries and we\'ll get back to you soon!'),
+      isExternal: false
     },
     {
       icon: Clock,
-      title: '24/7 Support',
-      details: 'Emergency Hotline',
-      subtitle: '+1 (555) 911-HELP',
-      action: () => handleQuickContact('emergency')
+      title: 'Response Time',
+      details: 'Within 24 Hours',
+      subtitle: 'Quick response guaranteed',
+      action: () => alert('⏰ Response Time\n\n📞 We typically respond to all inquiries within 24 hours during business days.\n\n🌍 For urgent travel assistance, please mention "URGENT" in your message subject.'),
+      isExternal: false
     }
   ];
 
@@ -118,13 +116,13 @@ const Contact: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 cursor-text">
             Let's Plan Your
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-orange-500">
               {' '}Dream Trip
             </span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto cursor-text">
             Ready to embark on your next adventure? Get in touch with our travel experts 
             and let us create a personalized itinerary just for you.
           </p>
@@ -138,14 +136,14 @@ const Contact: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-xl"
           >
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 cursor-text">
               Send us a Message
             </h3>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 cursor-text">
                     Full Name *
                   </label>
                   <input
@@ -160,7 +158,7 @@ const Contact: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 cursor-text">
                     Email Address *
                   </label>
                   <input
@@ -176,7 +174,7 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 cursor-text">
                   Preferred Destination *
                 </label>
                 <select
@@ -194,7 +192,7 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 cursor-text">
                   Message *
                 </label>
                 <textarea
@@ -213,7 +211,7 @@ const Contact: React.FC = () => {
                 disabled={isSubmitting}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`w-full py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed ${
+                className={`w-full py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-button ${
                   submitStatus === 'success' 
                     ? 'bg-green-500 hover:bg-green-600 text-white' 
                     : submitStatus === 'error'
@@ -256,8 +254,8 @@ const Contact: React.FC = () => {
             className="space-y-8"
           >
             <div className="bg-gradient-to-br from-sky-500 to-orange-500 rounded-2xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-6">Get in Touch</h3>
-              <p className="text-sky-100 mb-6">
+              <h3 className="text-2xl font-bold mb-6 cursor-text">Get in Touch</h3>
+              <p className="text-sky-100 mb-6 cursor-text">
                 Our travel experts are here to help you plan the perfect getaway. 
                 Reach out to us through any of these channels.
               </p>
@@ -269,14 +267,19 @@ const Contact: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={info.action}
-                    className="bg-white/10 backdrop-blur-sm rounded-xl p-4 hover:bg-white/20 transition-all duration-300 text-left w-full"
+                    className="bg-white/10 backdrop-blur-sm rounded-xl p-4 hover:bg-white/20 transition-all duration-300 text-left w-full cursor-button"
                   >
                     <div className="flex items-center gap-3">
                       <div className="bg-white/20 rounded-lg p-2">
                         <info.icon className="h-5 w-5 text-white" />
                       </div>
-                      <div>
-                        <h4 className="font-semibold text-sm">{info.title}</h4>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-semibold text-sm">{info.title}</h4>
+                          {info.isExternal && (
+                            <ExternalLink className="h-3 w-3 text-sky-200" />
+                          )}
+                        </div>
                         <p className="text-sky-100 text-sm">{info.details}</p>
                         <p className="text-sky-200 text-xs">{info.subtitle}</p>
                       </div>
@@ -286,31 +289,85 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* Map placeholder */}
+            {/* Developer Info Card */}
             <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-xl">
-              <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                Visit Our Office
+              <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4 cursor-text">
+                About the Developer
               </h4>
-              <motion.div 
-                whileHover={{ scale: 1.02 }}
-                className="bg-gray-100 dark:bg-gray-800 rounded-lg h-48 flex items-center justify-center cursor-pointer"
-                onClick={() => alert('🗺️ Interactive map coming soon!\n\nFor now, you can find us at:\n📍 123 Travel Street, New York, NY 10001\n\n🚗 Free parking available\n🚇 Near subway stations')}
-              >
-                <div className="text-center">
-                  <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Click to view location details
-                  </p>
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-orange-500 rounded-full flex items-center justify-center">
+                    <Code className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-gray-900 dark:text-white cursor-text">Krishna Sevak</h5>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 cursor-text">Full Stack Developer</p>
+                  </div>
                 </div>
-              </motion.div>
-              <div className="mt-4 p-4 bg-sky-50 dark:bg-sky-900/20 rounded-lg">
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  <strong>Office Hours:</strong><br />
-                  Monday - Friday: 9:00 AM - 6:00 PM<br />
-                  Saturday: 10:00 AM - 4:00 PM<br />
-                  Sunday: Closed
+                
+                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed cursor-text">
+                  Specialized in creating modern, interactive web applications with advanced animations 
+                  and smooth user experiences using React, TypeScript, and cutting-edge web technologies.
                 </p>
+                
+                <div className="flex flex-wrap gap-2">
+                  {['React', 'TypeScript', 'Framer Motion', 'Tailwind CSS', 'Node.js'].map((tech, index) => (
+                    <motion.span
+                      key={index}
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.1, duration: 0.3 }}
+                      whileHover={{ 
+                        scale: 1.1,
+                        boxShadow: '0 5px 15px rgba(14, 165, 233, 0.3)',
+                        transition: { duration: 0.2 }
+                      }}
+                      className="bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300 px-3 py-1 rounded-full text-xs font-medium border border-sky-200 dark:border-sky-800 cursor-pointer"
+                    >
+                      {tech}
+                    </motion.span>
+                  ))}
+                </div>
+
+                <motion.button
+                  whileHover={{ 
+                    scale: 1.02,
+                    boxShadow: '0 10px 25px rgba(14, 165, 233, 0.3)'
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handlePortfolioVisit}
+                  className="w-full bg-gradient-to-r from-sky-500 to-orange-500 hover:from-sky-600 hover:to-orange-600 text-white py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg flex items-center justify-center gap-2 cursor-button"
+                >
+                  <Globe className="h-4 w-4" />
+                  Visit Portfolio
+                  <ExternalLink className="h-4 w-4" />
+                </motion.button>
               </div>
+            </div>
+
+            {/* Project Info */}
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl p-6 border border-purple-200 dark:border-purple-800">
+              <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-3 cursor-text">
+                🚀 Project Features
+              </h4>
+              <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li className="flex items-center gap-2 cursor-text">
+                  <div className="w-2 h-2 bg-sky-500 rounded-full"></div>
+                  Advanced animations with Framer Motion
+                </li>
+                <li className="flex items-center gap-2 cursor-text">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                  Interactive cursor effects & visual feedback
+                </li>
+                <li className="flex items-center gap-2 cursor-text">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                  Responsive design with dark mode support
+                </li>
+                <li className="flex items-center gap-2 cursor-text">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  Modern TypeScript & React architecture
+                </li>
+              </ul>
             </div>
           </motion.div>
         </div>
