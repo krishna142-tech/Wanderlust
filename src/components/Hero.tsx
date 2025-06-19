@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Play, Sparkles, X, Zap, Star, Globe } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const [showVideo, setShowVideo] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -16,13 +15,6 @@ const Hero: React.FC = () => {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  // Advanced cursor tracking
-  const cursorX = useMotionValue(0);
-  const cursorY = useMotionValue(0);
-  const springConfig = { damping: 25, stiffness: 700 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
-
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (heroRef.current) {
@@ -30,8 +22,6 @@ const Hero: React.FC = () => {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         setMousePosition({ x, y });
-        cursorX.set(x);
-        cursorY.set(y);
       }
     };
 
@@ -40,7 +30,7 @@ const Hero: React.FC = () => {
       heroElement.addEventListener('mousemove', handleMouseMove);
       return () => heroElement.removeEventListener('mousemove', handleMouseMove);
     }
-  }, [cursorX, cursorY]);
+  }, []);
 
   const scrollToDestinations = () => {
     const element = document.querySelector('#destinations');
@@ -85,44 +75,7 @@ const Hero: React.FC = () => {
 
   return (
     <>
-      <section ref={heroRef} id="home" className="relative h-screen flex items-center justify-center overflow-hidden cursor-none">
-        {/* Advanced Custom Cursor */}
-        <motion.div
-          ref={cursorRef}
-          className="fixed w-8 h-8 pointer-events-none z-50 mix-blend-difference"
-          style={{
-            left: cursorXSpring,
-            top: cursorYSpring,
-            x: -16,
-            y: -16,
-          }}
-        >
-          <motion.div
-            className="w-full h-full bg-white rounded-full"
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <motion.div
-            className="absolute inset-0 border-2 border-white rounded-full"
-            animate={{
-              scale: [1, 2, 1],
-              opacity: [1, 0, 1],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeOut"
-            }}
-          />
-        </motion.div>
-
+      <section ref={heroRef} id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Interactive Parallax Background */}
         <motion.div 
           className="absolute inset-0 bg-cover bg-center"
@@ -144,8 +97,8 @@ const Hero: React.FC = () => {
             const baseX = Math.random() * 100;
             const baseY = Math.random() * 100;
             const magneticEffect = calculateMagneticEffect(
-              (baseX / 100) * window.innerWidth,
-              (baseY / 100) * window.innerHeight,
+              (baseX / 100) * (typeof window !== 'undefined' ? window.innerWidth : 1920),
+              (baseY / 100) * (typeof window !== 'undefined' ? window.innerHeight : 1080),
               30
             );
             
@@ -179,27 +132,6 @@ const Hero: React.FC = () => {
             );
           })}
         </div>
-
-        {/* Ripple Effect on Click */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none"
-          onClick={(e) => {
-            const ripple = document.createElement('div');
-            ripple.className = 'absolute w-4 h-4 bg-white/30 rounded-full pointer-events-none';
-            ripple.style.left = `${e.clientX}px`;
-            ripple.style.top = `${e.clientY}px`;
-            ripple.style.transform = 'translate(-50%, -50%)';
-            document.body.appendChild(ripple);
-            
-            ripple.animate([
-              { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
-              { transform: 'translate(-50%, -50%) scale(20)', opacity: 0 }
-            ], {
-              duration: 600,
-              easing: 'ease-out'
-            }).onfinish = () => ripple.remove();
-          }}
-        />
 
         {/* Hero Content with Advanced Interactions */}
         <div className="relative z-20 text-center text-white max-w-6xl mx-auto px-4">
@@ -459,9 +391,9 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1, y: 0, rotateY: 0 }}
           transition={{ delay: 1.8, duration: 1, ease: "easeOut" }}
           style={{
-            x: calculateMagneticEffect(window.innerWidth - 100, window.innerHeight - 200, -60).x,
-            y: calculateMagneticEffect(window.innerWidth - 100, window.innerHeight - 200, -60).y,
-            scale: calculateMagneticEffect(window.innerWidth - 100, window.innerHeight - 200, -60).scale,
+            x: calculateMagneticEffect(typeof window !== 'undefined' ? window.innerWidth - 100 : 1820, typeof window !== 'undefined' ? window.innerHeight - 200 : 880, -60).x,
+            y: calculateMagneticEffect(typeof window !== 'undefined' ? window.innerWidth - 100 : 1820, typeof window !== 'undefined' ? window.innerHeight - 200 : 880, -60).y,
+            scale: calculateMagneticEffect(typeof window !== 'undefined' ? window.innerWidth - 100 : 1820, typeof window !== 'undefined' ? window.innerHeight - 200 : 880, -60).scale,
           }}
         >
           <motion.div 
@@ -506,8 +438,8 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
           style={{
-            x: calculateMagneticEffect(window.innerWidth * 0.75, window.innerHeight * 0.33, -40).x,
-            y: calculateMagneticEffect(window.innerWidth * 0.75, window.innerHeight * 0.33, -40).y,
+            x: calculateMagneticEffect(typeof window !== 'undefined' ? window.innerWidth * 0.75 : 1440, typeof window !== 'undefined' ? window.innerHeight * 0.33 : 360, -40).x,
+            y: calculateMagneticEffect(typeof window !== 'undefined' ? window.innerWidth * 0.75 : 1440, typeof window !== 'undefined' ? window.innerHeight * 0.33 : 360, -40).y,
           }}
         >
           <motion.div 
@@ -537,8 +469,8 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 2.5, duration: 0.8, ease: "easeOut" }}
           style={{
-            x: calculateMagneticEffect(window.innerWidth * 0.25, window.innerHeight * 0.67, -40).x,
-            y: calculateMagneticEffect(window.innerWidth * 0.25, window.innerHeight * 0.67, -40).y,
+            x: calculateMagneticEffect(typeof window !== 'undefined' ? window.innerWidth * 0.25 : 480, typeof window !== 'undefined' ? window.innerHeight * 0.67 : 720, -40).x,
+            y: calculateMagneticEffect(typeof window !== 'undefined' ? window.innerWidth * 0.25 : 480, typeof window !== 'undefined' ? window.innerHeight * 0.67 : 720, -40).y,
           }}
         >
           <motion.div 
@@ -570,7 +502,7 @@ const Hero: React.FC = () => {
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group z-30"
           onClick={scrollToDestinations}
           style={{
-            y: calculateMagneticEffect(window.innerWidth / 2, window.innerHeight - 100, -20).y,
+            y: calculateMagneticEffect(typeof window !== 'undefined' ? window.innerWidth / 2 : 960, typeof window !== 'undefined' ? window.innerHeight - 100 : 980, -20).y,
           }}
         >
           <motion.div className="flex flex-col items-center">
