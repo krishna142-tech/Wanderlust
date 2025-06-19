@@ -253,11 +253,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### **Development Platform**
 - **Bolt.new** - AI-powered development environment that made rapid iteration and deployment possible
-- **StackBlitz** - Cloud development platform powering Bolt.new
-
-### **AI & Development Tools**
-- **Claude Sonnet 4** - Advanced AI assistance for code architecture and optimization
-- **Cursor AI** - Intelligent code completion and development assistance
 
 ### **Assets & Resources**
 - **Images**: [Pexels](https://pexels.com) - High-quality stock photography
