@@ -1,9 +1,51 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Play, Sparkles, X } from 'lucide-react';
+import { gsap } from 'gsap';
+import MagneticButton from './MagneticButton';
+import RippleEffect from './RippleEffect';
+import TextReveal from './TextReveal';
+import MorphingShape from './MorphingShape';
+import LiquidButton from './LiquidButton';
 
 const Hero: React.FC = () => {
   const [showVideo, setShowVideo] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  useEffect(() => {
+    // GSAP timeline for hero entrance
+    const tl = gsap.timeline();
+    
+    tl.from('.hero-bg', {
+      scale: 1.2,
+      duration: 2,
+      ease: "power2.out"
+    })
+    .from('.hero-content', {
+      y: 100,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power3.out"
+    }, "-=1")
+    .from('.floating-element', {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+      ease: "back.out(1.7)"
+    }, "-=0.5");
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
 
   const scrollToDestinations = () => {
     const element = document.querySelector('#destinations');
@@ -13,7 +55,6 @@ const Hero: React.FC = () => {
   };
 
   const handleBookTrip = () => {
-    // Scroll to contact form for booking
     const element = document.querySelector('#contact');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -30,258 +71,244 @@ const Hero: React.FC = () => {
 
   return (
     <>
-      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Parallax Effect */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-fixed"
+      <section ref={heroRef} id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Advanced Parallax Background */}
+        <motion.div 
+          className="hero-bg absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: 'url(https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop)'
+            backgroundImage: 'url(https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop)',
+            y
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50"></div>
-        </div>
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50"
+            style={{ opacity }}
+          />
+        </motion.div>
 
-        {/* Floating particles background */}
+        {/* Morphing Shapes */}
+        <MorphingShape className="top-20 left-20 w-32 h-32 opacity-30" />
+        <MorphingShape className="bottom-20 right-20 w-24 h-24 opacity-20" />
+
+        {/* Advanced Particle System */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(15)].map((_, i) => (
+          {[...Array(30)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-white/30 rounded-full"
+              className="absolute w-1 h-1 bg-white/40 rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
               }}
               animate={{
-                y: [0, -30, 0],
-                opacity: [0.3, 0.8, 0.3],
-                scale: [1, 1.5, 1],
+                y: [0, -50, 0],
+                x: [0, Math.random() * 20 - 10, 0],
+                opacity: [0.2, 1, 0.2],
+                scale: [1, 2, 1],
               }}
               transition={{
-                duration: 4 + Math.random() * 2,
+                duration: 6 + Math.random() * 4,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: Math.random() * 3,
                 ease: "easeInOut"
               }}
             />
           ))}
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 text-center text-white max-w-5xl mx-auto px-4">
+        {/* Hero Content with Advanced Animations */}
+        <div className="hero-content relative z-10 text-center text-white max-w-6xl mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="mb-4"
+            initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ 
+              duration: 1.2, 
+              delay: 0.5,
+              type: "spring",
+              stiffness: 100
+            }}
+            className="mb-6"
           >
-            <Sparkles className="h-8 w-8 text-sky-400 mx-auto mb-2" />
+            <Sparkles className="h-12 w-12 text-sky-400 mx-auto mb-4" />
           </motion.div>
 
-          <motion.h1
+          {/* Advanced Text Reveal */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="mb-8"
+          >
+            <TextReveal 
+              text="Explore The World"
+              className="text-4xl md:text-7xl lg:text-8xl font-bold leading-tight"
+              delay={0.1}
+            />
+          </motion.div>
+
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
+            transition={{ duration: 1, delay: 1.5 }}
+            className="mb-12"
           >
-            Explore The
-            <motion.span 
-              className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-orange-400"
-              animate={{ 
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-              }}
-              transition={{ 
-                duration: 3, 
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              style={{ backgroundSize: '200% 200%' }}
-            >
-              {' '}World
-            </motion.span>
-          </motion.h1>
+            <TextReveal
+              text="Discover breathtaking destinations, create unforgettable memories, and embark on adventures that will last a lifetime."
+              className="text-lg md:text-2xl text-gray-200 max-w-4xl mx-auto leading-relaxed"
+              delay={0.05}
+            />
+          </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto leading-relaxed"
-          >
-            Discover breathtaking destinations, create unforgettable memories, and embark on adventures that will last a lifetime.
-          </motion.p>
-
+          {/* Advanced Interactive Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            transition={{ duration: 0.8, delay: 2 }}
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <motion.button
-              whileHover={{ 
-                scale: 1.05, 
-                boxShadow: '0 25px 50px rgba(14, 165, 233, 0.3)',
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleBookTrip}
-              className="group relative bg-gradient-to-r from-sky-500 via-blue-500 to-orange-500 hover:from-sky-600 hover:via-blue-600 hover:to-orange-600 text-white px-8 py-4 rounded-full text-lg font-semibold flex items-center gap-2 transition-all duration-300 shadow-2xl overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="relative z-10">Book Your Trip</span>
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200 relative z-10" />
-            </motion.button>
+            <RippleEffect>
+              <MagneticButton
+                onClick={handleBookTrip}
+                className="group relative bg-gradient-to-r from-sky-500 via-blue-500 to-orange-500 hover:from-sky-600 hover:via-blue-600 hover:to-orange-600 text-white px-10 py-5 rounded-full text-lg font-semibold flex items-center gap-3 transition-all duration-500 shadow-2xl overflow-hidden"
+                strength={0.4}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  animate={{
+                    x: ["-100%", "100%"],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
+                <span className="relative z-10">Book Your Adventure</span>
+                <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300 relative z-10" />
+              </MagneticButton>
+            </RippleEffect>
 
-            <motion.button
-              whileHover={{ 
-                scale: 1.05,
-                backgroundColor: 'rgba(255, 255, 255, 0.15)'
-              }}
-              whileTap={{ scale: 0.95 }}
+            <LiquidButton
               onClick={handleWatchVideo}
-              className="group bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-8 py-4 rounded-full text-lg font-semibold flex items-center gap-2 transition-all duration-300 border border-white/20 hover:border-white/40"
+              className="bg-white/10 backdrop-blur-md text-white px-10 py-5 rounded-full text-lg font-semibold flex items-center gap-3 border border-white/20"
             >
               <motion.div
-                whileHover={{ scale: 1.2 }}
-                className="bg-white/20 rounded-full p-1"
+                whileHover={{ scale: 1.3, rotate: 360 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white/20 rounded-full p-2"
               >
-                <Play className="h-4 w-4 fill-white" />
+                <Play className="h-5 w-5 fill-white" />
               </motion.div>
-              Watch Video
-            </motion.button>
+              Experience Video
+            </LiquidButton>
           </motion.div>
 
-          {/* Enhanced Floating Elements - Repositioned to avoid text overlap */}
+          {/* Advanced Floating Elements */}
           <motion.div
+            className="floating-element absolute top-20 left-4 md:left-8 lg:left-16 hidden lg:block"
             animate={{
-              y: [0, -25, 0],
-              rotate: [0, 5, 0],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute top-20 left-4 md:left-8 lg:left-16 hidden lg:block"
-          >
-            <div className="w-16 h-16 bg-gradient-to-br from-sky-400/20 to-blue-500/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-xl">
-              <span className="text-2xl">✈️</span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            animate={{
-              y: [0, 25, 0],
-              rotate: [0, -5, 0],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute bottom-32 right-4 md:right-8 lg:right-16 hidden lg:block"
-          >
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-400/20 to-pink-500/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 shadow-xl">
-              <span className="text-xl">🌴</span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            animate={{
-              y: [0, -15, 0],
-              x: [0, 10, 0],
+              y: [0, -30, 0],
+              rotate: [0, 10, 0],
+              scale: [1, 1.1, 1],
             }}
             transition={{
               duration: 6,
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className="absolute top-32 right-1/4 hidden xl:block"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-400/20 to-indigo-500/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 shadow-xl">
-              <span className="text-sm">🏖️</span>
-            </div>
-          </motion.div>
-
-          {/* Additional floating elements for tablets - positioned away from text */}
-          <motion.div
-            animate={{
-              y: [0, -20, 0],
-              rotate: [0, 10, 0],
-            }}
-            transition={{
-              duration: 4.5,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute top-16 left-1/3 hidden md:block lg:hidden"
-          >
-            <div className="w-8 h-8 bg-gradient-to-br from-cyan-400/20 to-teal-500/20 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/20 shadow-xl">
-              <span className="text-sm">🗺️</span>
-            </div>
+            <motion.div 
+              className="w-20 h-20 bg-gradient-to-br from-sky-400/30 to-blue-500/30 backdrop-blur-md rounded-3xl flex items-center justify-center border border-white/30 shadow-2xl"
+              whileHover={{ 
+                scale: 1.2, 
+                rotate: 15,
+                boxShadow: "0 25px 50px rgba(14, 165, 233, 0.4)"
+              }}
+            >
+              <span className="text-3xl">✈️</span>
+            </motion.div>
           </motion.div>
 
           <motion.div
+            className="floating-element absolute bottom-32 right-4 md:right-8 lg:right-16 hidden lg:block"
             animate={{
-              y: [0, 20, 0],
+              y: [0, 30, 0],
               rotate: [0, -10, 0],
+              x: [0, 10, 0],
             }}
             transition={{
-              duration: 5.5,
+              duration: 8,
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className="absolute bottom-28 left-1/4 hidden md:block lg:hidden"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-emerald-400/20 to-green-500/20 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/20 shadow-xl">
-              <span className="text-sm">🎒</span>
-            </div>
+            <motion.div 
+              className="w-16 h-16 bg-gradient-to-br from-orange-400/30 to-pink-500/30 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30 shadow-2xl"
+              whileHover={{ 
+                scale: 1.3, 
+                rotate: -15,
+                boxShadow: "0 20px 40px rgba(249, 115, 22, 0.4)"
+              }}
+            >
+              <span className="text-2xl">🌴</span>
+            </motion.div>
           </motion.div>
         </div>
 
-        {/* Enhanced Scroll Indicator - Fixed positioning and spacing */}
+        {/* Advanced Scroll Indicator */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 cursor-pointer group"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 2.5, type: "spring", stiffness: 200 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group"
           onClick={scrollToDestinations}
         >
-          <div className="flex flex-col items-center">
+          <motion.div className="flex flex-col items-center">
             <motion.div
+              className="w-8 h-12 border-2 border-white/60 rounded-full flex justify-center relative overflow-hidden group-hover:border-white/90 transition-colors duration-300"
               animate={{
-                y: [0, 12, 0],
+                y: [0, 15, 0],
               }}
               transition={{
-                duration: 2,
+                duration: 2.5,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="w-6 h-10 border-2 border-white/60 rounded-full flex justify-center relative overflow-hidden group-hover:border-white/80 transition-colors duration-300"
             >
               <motion.div
+                className="w-1.5 h-4 bg-white rounded-full mt-2 group-hover:bg-white/90"
                 animate={{
-                  y: [0, 16, 0],
+                  y: [0, 20, 0],
                   opacity: [0.4, 1, 0.4],
+                  scale: [1, 1.2, 1],
                 }}
                 transition={{
-                  duration: 2,
+                  duration: 2.5,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="w-1 h-3 bg-white rounded-full mt-2 group-hover:bg-white/90"
               />
             </motion.div>
             
             <motion.p 
-              className="text-white/60 text-xs mt-3 font-medium text-center group-hover:text-white/80 transition-colors duration-300"
-              animate={{ opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              className="text-white/70 text-sm mt-4 font-medium text-center group-hover:text-white/90 transition-colors duration-300"
+              animate={{ 
+                opacity: [0.7, 1, 0.7],
+                y: [0, -2, 0]
+              }}
+              transition={{ 
+                duration: 2.5, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
             >
               Scroll to explore
             </motion.p>
-          </div>
+          </motion.div>
         </motion.div>
       </section>
 
-      {/* Video Modal */}
+      {/* Advanced Video Modal */}
       <AnimatePresence>
         {showVideo && (
           <motion.div
@@ -292,73 +319,86 @@ const Hero: React.FC = () => {
             onClick={closeVideo}
           >
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="relative w-full max-w-6xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
+              initial={{ scale: 0.5, opacity: 0, rotateY: -90 }}
+              animate={{ scale: 1, opacity: 1, rotateY: 0 }}
+              exit={{ scale: 0.5, opacity: 0, rotateY: 90 }}
+              transition={{ 
+                duration: 0.6,
+                type: "spring",
+                stiffness: 100
+              }}
+              className="relative w-full max-w-6xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+              {/* Advanced Close Button */}
+              <MagneticButton
                 onClick={closeVideo}
-                className="absolute top-4 right-4 z-20 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-200 border border-white/20"
+                className="absolute top-6 right-6 z-20 bg-black/70 hover:bg-black/90 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 border border-white/20"
+                strength={0.3}
               >
                 <X className="h-6 w-6" />
-              </motion.button>
+              </MagneticButton>
 
-              {/* Video Iframe - Adventure/Skydiving themed video */}
+              {/* Video with Advanced Loading */}
               <div className="w-full h-full relative">
-                <iframe
-                  src="https://player.vimeo.com/video/158284739?autoplay=1&loop=1&muted=1&background=1"
-                  className="w-full h-full"
-                  frameBorder="0"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                  title="Ultimate Adventure Experience"
-                />
-              </div>
-
-              {/* Video Overlay Info - Updated to match adventure theme */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 z-10">
                 <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="text-white"
+                  initial={{ scale: 1.1 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.8 }}
                 >
-                  <h3 className="text-2xl md:text-3xl font-bold mb-2">Ultimate Adventure Experience</h3>
-                  <p className="text-gray-200 mb-4 text-sm md:text-base">
-                    Feel the rush of adrenaline as you soar through the skies and experience the world from breathtaking heights. 
-                    Push your limits with our extreme adventure packages designed for thrill-seekers.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs md:text-sm border border-white/30">
-                      🪂 Skydiving
-                    </span>
-                    <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs md:text-sm border border-white/30">
-                      ⚡ Extreme Sports
-                    </span>
-                    <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs md:text-sm border border-white/30">
-                      🌤️ Sky Adventures
-                    </span>
-                    <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs md:text-sm border border-white/30">
-                      🎯 Adrenaline Rush
-                    </span>
-                  </div>
+                  <iframe
+                    src="https://player.vimeo.com/video/158284739?autoplay=1&loop=1&muted=1&background=1"
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                    title="Ultimate Adventure Experience"
+                  />
                 </motion.div>
               </div>
 
-              {/* Loading indicator */}
-              <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-5">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full"
-                />
-              </div>
+              {/* Advanced Video Overlay */}
+              <motion.div
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
+                className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 z-10"
+              >
+                <div className="text-white">
+                  <TextReveal
+                    text="Ultimate Adventure Experience"
+                    className="text-2xl md:text-4xl font-bold mb-3"
+                    delay={0.1}
+                  />
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.2 }}
+                    className="text-gray-200 mb-6 text-sm md:text-base leading-relaxed"
+                  >
+                    Feel the rush of adrenaline as you soar through the skies and experience the world from breathtaking heights. 
+                    Push your limits with our extreme adventure packages designed for thrill-seekers.
+                  </motion.p>
+                  <motion.div 
+                    className="flex flex-wrap gap-3"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.5, staggerChildren: 0.1 }}
+                  >
+                    {['🪂 Skydiving', '⚡ Extreme Sports', '🌤️ Sky Adventures', '🎯 Adrenaline Rush'].map((tag, index) => (
+                      <motion.span
+                        key={index}
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 1.5 + index * 0.1, type: "spring", stiffness: 200 }}
+                        className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-xs md:text-sm border border-white/30 hover:bg-white/30 transition-colors duration-300"
+                      >
+                        {tag}
+                      </motion.span>
+                    ))}
+                  </motion.div>
+                </div>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}
