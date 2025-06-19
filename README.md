@@ -11,16 +11,17 @@
 ## 📸 Screenshots
 
 ### Desktop View
-![Desktop Hero Section](![wanderlust1](https://github.com/user-attachments/assets/cf55cb69-14b6-4b15-9ca5-7c9ba17c18f5)
+![Uploading wanderlust1.png…]()
+
 )
 *Hero section with interactive animations and custom cursor effects*
 
 ### Mobile Responsive
-![Mobile View](./screenshots/mobile-view.png)
 *Fully responsive design optimized for all devices*
 
 ### Dark Mode
-![Dark Mode](![wderlust2](https://github.com/user-attachments/assets/71691ade-fa3e-4811-805b-34f6c69d090e)
+![wderlust2](https://github.com/user-attachments/assets/408ed635-98be-45c4-9b59-75a550cc7a68)
+
 )
 *Beautiful dark mode with smooth transitions*
 
