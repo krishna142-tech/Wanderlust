@@ -7,7 +7,7 @@ const destinations = [
   {
     id: 1,
     name: 'Bali, Indonesia',
-    image: 'https://images.pexels.com/photos/2374194/pexels-photo-2374194.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: 'https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=800',
     price: '$1,299',
     duration: '7 Days',
     rating: 4.9,
@@ -280,12 +280,12 @@ const Destinations: React.FC = () => {
             >
               <MapPin className="h-5 w-5 text-sky-600 dark:text-sky-400" />
             </motion.div>
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Handpicked Destinations</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-text">Handpicked Destinations</span>
             <Sparkles className="h-4 w-4 text-orange-500" />
           </motion.div>
 
           <motion.h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 cursor-text"
             style={{
               textShadow: '0 0 30px rgba(14, 165, 233, 0.3)',
             }}
@@ -324,7 +324,7 @@ const Destinations: React.FC = () => {
           </motion.h2>
           
           <motion.p
-            className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
+            className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed cursor-text"
             whileHover={{
               scale: 1.02,
               color: '#374151',
@@ -379,6 +379,11 @@ const Destinations: React.FC = () => {
                     src={destination.image}
                     alt={destination.name}
                     className="w-full h-64 object-cover"
+                    onError={(e) => {
+                      // Fallback image if the main image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=800';
+                    }}
                     whileHover={{ 
                       scale: 1.1,
                       filter: 'brightness(1.1) contrast(1.1)',
@@ -458,7 +463,7 @@ const Destinations: React.FC = () => {
                       e.stopPropagation();
                       handleAddToWishlist(destination.name);
                     }}
-                    className="absolute bottom-4 right-4 bg-white/20 backdrop-blur-sm hover:bg-red-500/80 p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hidden md:block border border-white/30"
+                    className="absolute bottom-4 right-4 bg-white/20 backdrop-blur-sm hover:bg-red-500/80 p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hidden md:block border border-white/30 cursor-button"
                   >
                     <Heart className="h-5 w-5 text-white" />
                   </motion.button>
@@ -479,7 +484,7 @@ const Destinations: React.FC = () => {
                         e.stopPropagation();
                         handleViewDetails(destination.name);
                       }}
-                      className="bg-white/90 backdrop-blur-sm hover:bg-white text-gray-900 px-5 py-3 rounded-full text-sm font-semibold flex items-center gap-2 shadow-lg border border-white/50"
+                      className="bg-white/90 backdrop-blur-sm hover:bg-white text-gray-900 px-5 py-3 rounded-full text-sm font-semibold flex items-center gap-2 shadow-lg border border-white/50 cursor-button"
                     >
                       <Zap className="h-4 w-4" />
                       Details
@@ -524,7 +529,7 @@ const Destinations: React.FC = () => {
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-3">
                     <motion.h3 
-                      className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors duration-300"
+                      className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors duration-300 cursor-text"
                       whileHover={{
                         scale: 1.05,
                         textShadow: '0 0 10px rgba(14, 165, 233, 0.5)',
@@ -543,14 +548,14 @@ const Destinations: React.FC = () => {
                       >
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                       </motion.div>
-                      <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 cursor-text">
                         {destination.rating}
                       </span>
                     </motion.div>
                   </div>
 
                   <motion.p 
-                    className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed"
+                    className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed cursor-text"
                     whileHover={{
                       color: '#374151',
                       transition: { duration: 0.2 }
@@ -561,14 +566,14 @@ const Destinations: React.FC = () => {
 
                   <div className="flex items-center gap-4 mb-4 text-sm text-gray-500 dark:text-gray-400">
                     <motion.div 
-                      className="flex items-center gap-1"
+                      className="flex items-center gap-1 cursor-text"
                       whileHover={{ scale: 1.05, color: '#6b7280' }}
                     >
                       <Clock className="h-4 w-4" />
                       <span>{destination.duration}</span>
                     </motion.div>
                     <motion.div 
-                      className="flex items-center gap-1"
+                      className="flex items-center gap-1 cursor-text"
                       whileHover={{ scale: 1.05, color: '#6b7280' }}
                     >
                       <Users className="h-4 w-4" />
@@ -607,7 +612,7 @@ const Destinations: React.FC = () => {
                         e.stopPropagation();
                         handleBookNow(destination.name);
                       }}
-                      className={`flex-1 bg-gradient-to-r ${destination.color} hover:shadow-lg text-white py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg flex items-center justify-center gap-2 group/btn relative overflow-hidden`}
+                      className={`flex-1 bg-gradient-to-r ${destination.color} hover:shadow-lg text-white py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg flex items-center justify-center gap-2 group/btn relative overflow-hidden cursor-button`}
                     >
                       <motion.div
                         className="absolute inset-0 bg-white/20 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"
@@ -642,7 +647,7 @@ const Destinations: React.FC = () => {
                         e.stopPropagation();
                         handleViewDetails(destination.name);
                       }}
-                      className="md:hidden bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 p-3 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                      className="md:hidden bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 p-3 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 cursor-button"
                     >
                       <ArrowRight className="h-4 w-4" />
                     </motion.button>
@@ -668,7 +673,7 @@ const Destinations: React.FC = () => {
             }}
             whileTap={{ scale: 0.95, rotateY: -5 }}
             onClick={() => alert('🌍 More destinations coming soon! Subscribe to our newsletter to be the first to know about new exotic locations.')}
-            className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-10 py-5 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 flex items-center gap-3 mx-auto relative overflow-hidden group"
+            className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-10 py-5 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 flex items-center gap-3 mx-auto relative overflow-hidden group cursor-button"
             style={{ transformStyle: 'preserve-3d' }}
           >
             <motion.div
