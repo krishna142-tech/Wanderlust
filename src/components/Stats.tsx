@@ -103,6 +103,22 @@ const Stats: React.FC = () => {
     threshold: 0.2
   });
 
+  const handleJoinCommunity = () => {
+    const contactElement = document.querySelector('#contact');
+    if (contactElement) {
+      contactElement.scrollIntoView({ behavior: 'smooth' });
+      // Focus on the contact form after scrolling
+      setTimeout(() => {
+        const nameInput = document.querySelector('input[name="name"]') as HTMLInputElement;
+        if (nameInput) {
+          nameInput.focus();
+        }
+      }, 1000);
+    } else {
+      alert('📧 Join our community by filling out the contact form below! \n\nWe\'ll keep you updated with the latest travel deals and destination guides.');
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -128,7 +144,7 @@ const Stats: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+    <section id="statistics" className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0">
         {[...Array(30)].map((_, i) => (
@@ -173,10 +189,10 @@ const Stats: React.FC = () => {
             className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-white/20"
           >
             <TrendingUp className="h-4 w-4 text-cyan-400" />
-            <span className="text-sm font-medium text-white/90">Our Impact</span>
+            <span className="text-sm font-medium text-white/90 cursor-text">Our Impact</span>
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 cursor-text">
             Our Amazing
             <motion.span 
               className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400"
@@ -193,7 +209,7 @@ const Stats: React.FC = () => {
               {' '}Journey
             </motion.span>
           </h2>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed cursor-text">
             Join thousands of happy travelers who have trusted us to create their perfect vacation experiences around the globe.
           </p>
         </motion.div>
@@ -213,7 +229,7 @@ const Stats: React.FC = () => {
                 rotateY: window.innerWidth > 1024 ? 5 : 0,
                 transition: { duration: 0.3, ease: "easeOut" }
               }}
-              className="group relative bg-white/5 backdrop-blur-md rounded-3xl p-8 text-center hover:bg-white/10 transition-all duration-500 border border-white/10 hover:border-white/20 overflow-hidden"
+              className="group relative bg-white/5 backdrop-blur-md rounded-3xl p-8 text-center hover:bg-white/10 transition-all duration-500 border border-white/10 hover:border-white/20 overflow-hidden cursor-button"
             >
               {/* Gradient background on hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`}></div>
@@ -233,7 +249,7 @@ const Stats: React.FC = () => {
 
               <div className="mb-4 relative">
                 <motion.div 
-                  className="text-4xl md:text-5xl font-bold text-white mb-2"
+                  className="text-4xl md:text-5xl font-bold text-white mb-2 cursor-text"
                   whileHover={{ scale: window.innerWidth > 768 ? 1.1 : 1 }}
                   transition={{ duration: 0.2 }}
                 >
@@ -242,10 +258,10 @@ const Stats: React.FC = () => {
                     {stat.suffix}
                   </span>
                 </motion.div>
-                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-cyan-300 transition-colors duration-300">
+                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-cyan-300 transition-colors duration-300 cursor-text">
                   {stat.label}
                 </h3>
-                <p className="text-blue-100 text-sm leading-relaxed">
+                <p className="text-blue-100 text-sm leading-relaxed cursor-text">
                   {stat.description}
                 </p>
               </div>
@@ -296,7 +312,8 @@ const Stats: React.FC = () => {
               boxShadow: window.innerWidth > 768 ? '0 20px 40px rgba(59, 130, 246, 0.3)' : 'none'
             }}
             whileTap={{ scale: 0.95 }}
-            className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-4 rounded-full font-semibold shadow-2xl transition-all duration-300 border border-blue-400/50"
+            onClick={handleJoinCommunity}
+            className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-4 rounded-full font-semibold shadow-2xl transition-all duration-300 border border-blue-400/50 cursor-button"
           >
             Join Our Community
           </motion.button>

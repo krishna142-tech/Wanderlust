@@ -11,9 +11,8 @@ const Navbar: React.FC = () => {
   const navItems = [
     { name: 'Home', href: '#home' },
     { name: 'Destinations', href: '#destinations' },
-    { name: 'Packages', href: '#packages' },
+    { name: 'Statistics', href: '#statistics' },
     { name: 'Testimonials', href: '#testimonials' },
-    { name: 'About', href: '#about' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -26,11 +25,49 @@ const Navbar: React.FC = () => {
   }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
+    const targetId = href.replace('#', '');
+    let element = document.querySelector(href);
+    
+    // Fallback for sections that might have different IDs
+    if (!element) {
+      switch (targetId) {
+        case 'home':
+          element = document.querySelector('#home') || document.querySelector('section');
+          break;
+        case 'destinations':
+          element = document.querySelector('#destinations');
+          break;
+        case 'statistics':
+          element = document.querySelector('#statistics') || document.querySelector('[class*="stats"]') || document.querySelector('[class*="Stats"]');
+          break;
+        case 'testimonials':
+          element = document.querySelector('#testimonials');
+          break;
+        case 'contact':
+          element = document.querySelector('#contact');
+          break;
+        default:
+          // If section doesn't exist, show a message
+          alert(`🚧 ${targetId.charAt(0).toUpperCase() + targetId.slice(1)} section is coming soon! \n\nWe're working on adding more amazing features to enhance your travel experience.`);
+          setIsOpen(false);
+          return;
+      }
+    }
+    
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Fallback message if section still not found
+      alert(`🚧 ${targetId.charAt(0).toUpperCase() + targetId.slice(1)} section is coming soon! \n\nWe're working on adding more amazing features to enhance your travel experience.`);
     }
     setIsOpen(false);
+  };
+
+  const handleLogoClick = () => {
+    const homeElement = document.querySelector('#home') || document.querySelector('section');
+    if (homeElement) {
+      homeElement.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -47,10 +84,11 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-2"
+            onClick={handleLogoClick}
+            className="flex items-center space-x-2 cursor-button"
           >
             <Plane className="h-8 w-8 text-sky-500" />
-            <span className="text-xl font-bold text-gray-900 dark:text-white">
+            <span className="text-xl font-bold text-gray-900 dark:text-white cursor-text">
               Wanderlust
             </span>
           </motion.div>
@@ -64,7 +102,7 @@ const Navbar: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scrollToSection(item.href)}
-                  className="text-gray-900 dark:text-white hover:text-sky-500 dark:hover:text-sky-400 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                  className="text-gray-900 dark:text-white hover:text-sky-500 dark:hover:text-sky-400 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 cursor-button"
                 >
                   {item.name}
                 </motion.button>
@@ -78,7 +116,7 @@ const Navbar: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={toggleTheme}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 cursor-button"
             >
               {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </motion.button>
@@ -86,7 +124,7 @@ const Navbar: React.FC = () => {
             <div className="md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-gray-900 dark:text-white hover:text-sky-500 dark:hover:text-sky-400"
+                className="text-gray-900 dark:text-white hover:text-sky-500 dark:hover:text-sky-400 cursor-button"
               >
                 {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
@@ -108,7 +146,7 @@ const Navbar: React.FC = () => {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="text-gray-900 dark:text-white hover:text-sky-500 dark:hover:text-sky-400 block px-3 py-2 rounded-md text-base font-medium w-full text-left transition-colors duration-200"
+                className="text-gray-900 dark:text-white hover:text-sky-500 dark:hover:text-sky-400 block px-3 py-2 rounded-md text-base font-medium w-full text-left transition-colors duration-200 cursor-button"
               >
                 {item.name}
               </button>
