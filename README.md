@@ -274,7 +274,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**[🌍 Visit Live Site](https://your-vercel-url.vercel.app)** • **[📧 Contact Developer](https://krishnasevak.netlify.app)** • **[⭐ Star this repo](https://github.com/yourusername/wanderlust-travel)**
+**[🌍 Visit Live Site](https://wanderlust-teal.vercel.app/)** • **[📧 Contact Developer](https://krishnasevak.netlify.app)** • **[⭐ Star this repo](https://github.com/krishna142-tech/Wanderlust)**
 
 Built with ❤️ using AI-powered development tools and cutting-edge web technologies
 
