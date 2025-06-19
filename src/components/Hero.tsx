@@ -54,7 +54,7 @@ const Hero: React.FC = () => {
     setShowVideo(false);
   };
 
-  // Magnetic effect calculation
+  // Magnetic effect calculation for floating elements
   const calculateMagneticEffect = (elementX: number, elementY: number, strength: number = 50) => {
     const distance = Math.sqrt(
       Math.pow(mousePosition.x - elementX, 2) + Math.pow(mousePosition.y - elementY, 2)
@@ -96,11 +96,6 @@ const Hero: React.FC = () => {
           {[...Array(25)].map((_, i) => {
             const baseX = Math.random() * 100;
             const baseY = Math.random() * 100;
-            const magneticEffect = calculateMagneticEffect(
-              (baseX / 100) * (typeof window !== 'undefined' ? window.innerWidth : 1920),
-              (baseY / 100) * (typeof window !== 'undefined' ? window.innerHeight : 1080),
-              30
-            );
             
             return (
               <motion.div
@@ -171,7 +166,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 50, rotateX: -90 }}
             animate={{ opacity: 1, y: 0, rotateX: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-            className="text-4xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
+            className="text-4xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight cursor-text"
             style={{
               textShadow: '0 0 30px rgba(14, 165, 233, 0.5)',
             }}
@@ -214,7 +209,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 30, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
-            className="text-lg md:text-2xl mb-8 text-gray-200 max-w-4xl mx-auto leading-relaxed"
+            className="text-lg md:text-2xl mb-8 text-gray-200 max-w-4xl mx-auto leading-relaxed cursor-text"
             whileHover={{
               scale: 1.05,
               color: '#ffffff',
@@ -225,7 +220,7 @@ const Hero: React.FC = () => {
             Discover breathtaking destinations, create unforgettable memories, and embark on adventures that will last a lifetime.
           </motion.p>
 
-          {/* Advanced Interactive Buttons with Repel Effect */}
+          {/* Advanced Interactive Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -245,7 +240,7 @@ const Hero: React.FC = () => {
                 rotateX: -5,
               }}
               onClick={handleBookTrip}
-              className="group relative bg-gradient-to-r from-sky-500 via-blue-500 to-orange-500 hover:from-sky-600 hover:via-blue-600 hover:to-orange-600 text-white px-10 py-5 rounded-full text-lg font-semibold flex items-center gap-3 transition-all duration-300 shadow-2xl overflow-hidden"
+              className="group relative bg-gradient-to-r from-sky-500 via-blue-500 to-orange-500 hover:from-sky-600 hover:via-blue-600 hover:to-orange-600 text-white px-10 py-5 rounded-full text-lg font-semibold flex items-center gap-3 transition-all duration-300 shadow-2xl overflow-hidden cursor-button"
               style={{
                 transformStyle: 'preserve-3d',
               }}
@@ -302,7 +297,7 @@ const Hero: React.FC = () => {
                 rotateX: -5,
               }}
               onClick={handleWatchVideo}
-              className="group bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-10 py-5 rounded-full text-lg font-semibold flex items-center gap-3 transition-all duration-300 border border-white/20 hover:border-white/40"
+              className="group bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-10 py-5 rounded-full text-lg font-semibold flex items-center gap-3 transition-all duration-300 border border-white/20 hover:border-white/40 cursor-button"
               style={{
                 transformStyle: 'preserve-3d',
               }}
@@ -494,16 +489,13 @@ const Hero: React.FC = () => {
           </motion.div>
         </motion.div>
 
-        {/* Enhanced Scroll Indicator with Magnetic Effect */}
+        {/* Enhanced Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 3, duration: 0.8, ease: "easeOut" }}
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group z-30"
           onClick={scrollToDestinations}
-          style={{
-            y: calculateMagneticEffect(typeof window !== 'undefined' ? window.innerWidth / 2 : 960, typeof window !== 'undefined' ? window.innerHeight - 100 : 980, -20).y,
-          }}
         >
           <motion.div className="flex flex-col items-center">
             <motion.div
@@ -590,7 +582,7 @@ const Hero: React.FC = () => {
                 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={closeVideo}
-                className="absolute top-6 right-6 z-20 bg-black/70 hover:bg-black/90 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 border border-white/20"
+                className="absolute top-6 right-6 z-20 bg-black/70 hover:bg-black/90 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 border border-white/20 cursor-button"
               >
                 <X className="h-6 w-6" />
               </motion.button>
